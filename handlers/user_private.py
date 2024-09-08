@@ -52,11 +52,10 @@ async def get_answer_message(message: Message, state: FSMContext):
     create_answer = await generate_answer(message.text)
 
     if user_text == 'Отменить запрос ❌':
-        await state.clear()
         await message.answer('Вы вернулись в меню', reply_markup=await kb.main_kb())
     else:
         await message.answer(f'{create_answer}')
-        await state.clear()
+    await state.clear()
 
 
 @user_private_router.message(F.text == 'Сгенерировать фото 🥝')
@@ -72,8 +71,7 @@ async def get_photo(message: Message, state: FSMContext):
     create_photo = await generate_image(message.text)
 
     if user_text == 'Отменить запрос ❌':
-        await state.clear()
         await message.answer('Вы вернулись в меню', reply_markup=await kb.main_kb())
     else:
         await message.answer(f'{create_photo}')
-        await state.clear()
+    await state.clear()

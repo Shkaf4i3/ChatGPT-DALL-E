@@ -28,10 +28,10 @@ async def generate_answer(user_message) -> Text:
 client_dalle = AsyncOpenAI(api_key=getenv('dalle_key'))
 
 
-async def generate_image(user_text) -> IO[bytes]:
+async def generate_image(user_prompt) -> IO[bytes]:
     chat_completion = await client_dalle.images.generate(
         model='dall-e-3',
-        prompt=f'{user_text}',
+        prompt=f'{user_prompt}',
         size='1024x1024',
         quality='standard',
         n=1,

@@ -1,5 +1,5 @@
-import asyncio
-import logging
+from asyncio import run
+from logging import basicConfig, INFO
 from os import getenv
 from dotenv import load_dotenv
 
@@ -17,7 +17,7 @@ async def main() -> None:
     bot = Bot(getenv('bot_key'), default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     dp = Dispatcher()
-    dp.include_routers(user_private_router)
+    dp.include_router(user_private_router)
 
     await bot.delete_webhook(drop_pending_updates=True)
     await bot.set_my_commands(commands=private, scope=BotCommandScopeAllPrivateChats())
@@ -25,8 +25,8 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    basicConfig(level=INFO)
     try:
-        asyncio.run(main())
+        run(main())
     except KeyboardInterrupt:
         print('Exit')
