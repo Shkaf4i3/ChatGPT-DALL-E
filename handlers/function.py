@@ -1,13 +1,11 @@
 from typing import Text, IO
-from os import getenv
-from dotenv import load_dotenv
 
 from openai import AsyncOpenAI
 
+from handlers.config_reader import config
 
-load_dotenv()
 
-client_gpt = AsyncOpenAI(api_key=getenv('gpt_key'),
+client_gpt = AsyncOpenAI(api_key=config.gpt_key,
                         base_url="https://api.deepseek.com"
                      )
 
@@ -25,7 +23,7 @@ async def generate_answer(user_message) -> Text:
     return chat_completion.choices[0].message.content
 
 
-client_dalle = AsyncOpenAI(api_key=getenv('dalle_key'))
+client_dalle = AsyncOpenAI(api_key=config.dalle_key)
 
 
 async def generate_image(user_prompt) -> IO[bytes]:
